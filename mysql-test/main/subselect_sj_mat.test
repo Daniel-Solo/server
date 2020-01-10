@@ -2047,7 +2047,7 @@ INSERT INTO t1 VALUES
 INSERT INTO t2 VALUES
 ('17801ac21b13200050fdfbcd2c0713e8','8e826bf03710200044e0bfc8bcbe5d86',
 '14c19a061b13200050fdfbcd2c07134b'),
-('577ed708d773020058c92cf65e61037a','931644d4d773020058c92cf65e61034c',
+('96fb652637232000158bbfc8bcbe5db4','931644d4d773020058c92cf65e61034c',
 '339888d4d773020058c92cf65e6103aa'),
 ('df50316637232000158bbfc8bcbe5d23','92826bf03710200044e0bfc8bcbe5da9',
 '3682f56637232000158bbfc8bcbe5d44'),
@@ -2156,7 +2156,7 @@ WHERE t1.assignment_group = t3.sys_id AND
        FROM t2, t3 t3_i
        WHERE t2.ugroup = t3_i.sys_id AND 
              t3_i.type LIKE '59e22fb137032000158bbfc8bcbe5d52' AND
-             t2.user = '86826bf03710200044e0bfc8bcbe5d79');
+             t2.user = '931644d4d773020058c92cf65e61034c');
 
 set optimizer_switch='materialization=off';
 eval explain $q;

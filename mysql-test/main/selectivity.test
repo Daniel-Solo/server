@@ -1269,6 +1269,44 @@ drop table t1,t2;
 
 --echo # End of 10.1 tests
 
+--echo #
+--echo # MDEV-21377: Eq_ref access not picked by query with
+--echo # optimizer_use_condition_selectivity > 1
+--echo #
+
+create table t1(a int, b int,c int,  primary key(a), key(b), key(c));
+insert into t1 select seq, seq, seq from seq_1_to_100;
+
+create table t2(a int, b int,c int, primary key(a), key(b), key(c));
+insert into t2 select seq, seq, seq from seq_1_to_1000;
+
+create table t3(a int, b int, primary key(a));
+insert into t3 select seq, seq from seq_1_to_100;
+--disable_result_log
+analyze table t1,t2,t3;
+--enable_result_log
+
+set @save_optimizer_use_condition_selectivity=@@optimizer_use_condition_selectivity;
+set @save_optimizer_switch=@@optimizer_switch;
+set optimizer_switch='rowid_filter=off';
+let $q= SELECT * FROM t1, t2, t3 WHERE t1.c= t2.c and t1.a = t3.a and
+        t2.b < 10 AND t1.b < 10;
+
+set optimizer_use_condition_selectivity=1;
+eval explain $q;
+eval $q;
+
+set optimizer_use_condition_selectivity=4;
+eval explain $q;
+eval $q;
+
+set optimizer_use_condition_selectivity=@save_optimizer_use_condition_selectivity;
+set optimizer_switch=@save_optimizer_switch;
+
+drop table t1,t2,t3;
+
+--echo # End of 10.4 tests
+
 #
 # Clean up
 #

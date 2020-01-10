@@ -7370,6 +7370,7 @@ best_access_path(JOIN      *join,
 
             double tmp2= prev_record_reads(join_positions, idx,
                                            (found_ref | keyuse->used_tables));
+            tmp2= MY_MIN(tmp2, record_count);
             if (tmp2 < best_prev_record_reads)
             {
               best_part_found_ref= keyuse->used_tables & ~join->const_table_map;
@@ -7411,6 +7412,7 @@ best_access_path(JOIN      *join,
           but 1.0 would be probably safer
         */
         tmp= prev_record_reads(join_positions, idx, found_ref);
+        MY_MIN(tmp, record_count);
         records= 1.0;
         type= JT_FT;
         trace_access_idx.add("access_type", join_type_str[type])
@@ -7440,6 +7442,7 @@ best_access_path(JOIN      *join,
             trace_access_idx.add("access_type", join_type_str[type])
                             .add("index", keyinfo->name);
             tmp = prev_record_reads(join_positions, idx, found_ref);
+            tmp= MY_MIN(tmp, record_count);
             records=1.0;
           }
           else

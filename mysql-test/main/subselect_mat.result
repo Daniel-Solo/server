@@ -2368,9 +2368,9 @@ t1.dispatch_group IN
 FROM t2, t3 t3_i
 WHERE t2.ugroup = t3_i.sys_id AND 
 t3_i.type LIKE '59e22fb137032000158bbfc8bcbe5d52' AND
-t2.user = '86826bf03710200044e0bfc8bcbe5d79');
+t2.user = '931644d4d773020058c92cf65e61034c');
 id	select_type	table	type	possible_keys	key	key_len	ref	rows	Extra
-1	PRIMARY	t2	ref	idx3,idx4	idx4	35	const	2	Using index condition; Using where; Start temporary
+1	PRIMARY	t2	ref	idx3,idx4	idx4	35	const	1	Using index condition; Using where; Start temporary
 1	PRIMARY	t3_i	eq_ref	PRIMARY	PRIMARY	32	test.t2.ugroup	1	Using index condition; Using where
 1	PRIMARY	t1	ref	idx1,idx2	idx1	35	test.t3_i.sys_id	2	Using index condition; Using where; End temporary
 1	PRIMARY	t3	eq_ref	PRIMARY	PRIMARY	32	test.t1.assignment_group	1	Using where; Using index
@@ -2382,13 +2382,12 @@ t1.dispatch_group IN
 FROM t2, t3 t3_i
 WHERE t2.ugroup = t3_i.sys_id AND 
 t3_i.type LIKE '59e22fb137032000158bbfc8bcbe5d52' AND
-t2.user = '86826bf03710200044e0bfc8bcbe5d79');
+t2.user = '931644d4d773020058c92cf65e61034c');
 assignment_group
 df50316637232000158bbfc8bcbe5d23
 e08fad2637232000158bbfc8bcbe5d39
 ec70316637232000158bbfc8bcbe5d60
 7b10fd2637232000158bbfc8bcbe5d30
-ebb4620037332000158bbfc8bcbe5d89
 set optimizer_switch='materialization=on';
 explain SELECT t1.assignment_group
 FROM t1, t3
@@ -2398,12 +2397,12 @@ t1.dispatch_group IN
 FROM t2, t3 t3_i
 WHERE t2.ugroup = t3_i.sys_id AND 
 t3_i.type LIKE '59e22fb137032000158bbfc8bcbe5d52' AND
-t2.user = '86826bf03710200044e0bfc8bcbe5d79');
+t2.user = '931644d4d773020058c92cf65e61034c');
 id	select_type	table	type	possible_keys	key	key_len	ref	rows	Extra
-1	PRIMARY	<subquery2>	ALL	distinct_key	NULL	NULL	NULL	2	
+1	PRIMARY	<subquery2>	ALL	distinct_key	NULL	NULL	NULL	1	
 1	PRIMARY	t1	ref	idx1,idx2	idx1	35	test.t2.ugroup	2	Using where
 1	PRIMARY	t3	eq_ref	PRIMARY	PRIMARY	32	test.t1.assignment_group	1	Using where; Using index
-2	MATERIALIZED	t2	ref	idx3,idx4	idx4	35	const	2	Using index condition; Using where
+2	MATERIALIZED	t2	ref	idx3,idx4	idx4	35	const	1	Using index condition; Using where
 2	MATERIALIZED	t3_i	eq_ref	PRIMARY	PRIMARY	32	test.t2.ugroup	1	Using index condition; Using where
 SELECT t1.assignment_group
 FROM t1, t3
@@ -2413,13 +2412,12 @@ t1.dispatch_group IN
 FROM t2, t3 t3_i
 WHERE t2.ugroup = t3_i.sys_id AND 
 t3_i.type LIKE '59e22fb137032000158bbfc8bcbe5d52' AND
-t2.user = '86826bf03710200044e0bfc8bcbe5d79');
+t2.user = '931644d4d773020058c92cf65e61034c');
 assignment_group
 df50316637232000158bbfc8bcbe5d23
 e08fad2637232000158bbfc8bcbe5d39
 ec70316637232000158bbfc8bcbe5d60
 7b10fd2637232000158bbfc8bcbe5d30
-ebb4620037332000158bbfc8bcbe5d89
 DROP TABLE t1,t2,t3;
 set optimizer_switch=@local_optimizer_switch;
 #
